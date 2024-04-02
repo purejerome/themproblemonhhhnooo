@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // you shouldn't need to edit this first little bit
 function toggleLoader(subject) {
-  document.getElementById(`${subject}-loader`).classList.toggle('hidden')
+  document.getElementById(`${subject}-loader`).classList.toggle('hidden');
 }
 
 function noCommaToTheTop(s) {
@@ -9,13 +9,13 @@ function noCommaToTheTop(s) {
 }
 
 function updateRadio(options) {
-  const form = document.getElementById('just-bc')
+  const form = document.getElementById('just-bc');
   form.innerHTML = ''
   let yous = ''
   for (let opt of options) {
     yous += `<label for="${noCommaToTheTop(opt)}"><input type="radio" name="you" id="${noCommaToTheTop(opt)}">${opt}</label>`
   }
-  form.innerHTML = yous
+  form.innerHTML = yous;
 }
 
 function getYous() {
@@ -41,29 +41,39 @@ function getThey(you) {
 
 
 function init(ev) {
-  console.debug('fyi, this is what a domcontentloaded event looks like', ev)
+  console.debug('fyi, this is what a domcontentloaded event looks like', ev);
+  toggleLoader('you');
 
   // FIXME: notice above that getYous just returns a literal.
   // you should update the code below to instead call getOptions.
   // getOptions expects no arguments, and returns a promise that resolves to an array of strings.
-  const options = getYous()
-  updateRadio(options)
-
-  document.querySelectorAll("input[type='radio']").forEach((input) => {
-    input.addEventListener('change', changed);
+  const options = getOptions();
+  options.then((keys) => {
+    console.log(keys);
+    updateRadio(keys);
+    document.querySelectorAll("input[type='radio']").forEach((input) => {
+      input.addEventListener('change', changed);
+    });
+    toggleLoader('you');
   });
 }
 
 function changed(ev) {
+  toggleLoader('they');
   console.debug('fyi, this is what a change event looks like', ev)
-  const you = ev.target.parentElement.textContent
+  const you = ev.target.parentElement.textContent;
+  console.log(you);
 
   // FIXME: notice above that getThemProblem just returns a literal.
   // you should update the code below to instead call getThemProblem.
   // getThemProblem expects a string parameter (the only valid strings are those returned by getOptions), and returns a promise that resolves to a string.
-  const they = getThey(you)
-  const output = document.getElementById('they')
-  output.textContent = they
+  const they = getThemProblem(you);
+  they.then((text) => {
+    console.log(text);
+    const output = document.getElementById('they');
+    output.textContent = text;
+    toggleLoader('they');
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);

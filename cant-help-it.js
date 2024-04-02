@@ -2,7 +2,7 @@
 // you are welcome to view this file, but you shouldn't need to edit it
 ///////////////////////////////////////////////////////////////////////////////
 function getOptions() {
-  
+
   const options = {
     "poppin'": "stoppin'",
     "packin'": "lackin'",
@@ -10,10 +10,11 @@ function getOptions() {
     "happy": "crappy",
     "glad": "mad",
     "thrivin'": "sad",
+    "beefin": "seepin",
   }
 
   const result = new Promise((resolve, reject) => {
-    setTimeout(()=>{
+    setTimeout(() => {
       resolve(Object.keys(options));
     }, 2000 + Math.random() * 3000)
   });
@@ -28,6 +29,7 @@ function getThemProblem(you) {
     "happy": "crappy",
     "glad": "mad",
     "thrivin'": "sad",
+    "beefin": "seepin",
   }
 
   const result = new Promise((resolve, reject) => {
