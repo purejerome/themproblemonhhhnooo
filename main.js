@@ -59,6 +59,8 @@ function init(ev) {
 }
 
 function changed(ev) {
+  const output = document.getElementById('they');
+  output.textContent = "";
   toggleLoader('they');
   console.debug('fyi, this is what a change event looks like', ev)
   const you = ev.target.parentElement.textContent;
